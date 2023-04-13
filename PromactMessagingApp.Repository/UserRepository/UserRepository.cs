@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PromactMessagingApp.DomainModel.ApplicationClasses.UserAC;
-using PromactMessagingApp.DomainModel.ApplicationClasses.UserDetailAC;
 using PromactMessagingApp.DomainModel.Models.User;
 using PromactMessagingApp.Repository.Data;
 using System;
@@ -49,10 +48,17 @@ namespace PromactMessagingApp.Repository.User
         /// </summary>
         /// <param name="Id">Id is used for user details.</param>
         /// <returns>return show user details</returns>
-        public async Task<UserAC> GetUserByIdAsync(Guid Id)
+        public async Task<UserAC> GetUserByIdAsync(string Id)
         {
-            var userDetail = await _dataRepository.FirstAsync<UserInformation>(a => a.Id == Id);
-            return _mapper.Map<UserAC>(userDetail);
+            if (Guid.TryParse(Id, out Guid value))
+            {
+                var userDetail = await _dataRepository.FirstAsync<UserInformation>(a => a.Id == value);
+                return _mapper.Map<UserAC>(userDetail);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -68,27 +74,26 @@ namespace PromactMessagingApp.Repository.User
             {
                 throw new Exception("EmailId already exists");
             }
-            if (user.Image.Length >= 4194304)
+            else
             {
-                throw new Exception("Image file is more than the 4MB");
-            }
+                var image = this.CheckImageValidationAsync(user);
 
-            newUser.Id = Guid.NewGuid();
-            bool fileExtenstion = UserProfileAsync(user.Image); // file will be checking is extansion formate 
-            if (!fileExtenstion)
-            {
-                throw new Exception("File extension is not supported.");
+                UserInformation addUser = new UserInformation()
+                {
+                    Id = newUser.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Password = user.Password,
+                    SubscriptionLevel = user.SubscriptionLevel,
+                    Status = user.Status,
+                    Created = DateTime.Now,
+                    ProfilePhoto = user.Image.FileName,
+                    Notes = user.Notes
+                };
+                await _dataRepository.AddAsync(addUser);
+                return _mapper.Map<UserAC>(addUser);
             }
-            var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath + "\\ProfileImages\\"); // receving the image path tho save //
-            var filePath = Path.Combine(directoryPath, user.Image.FileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                user.Image.CopyTo(stream);
-            }
-            newUser.ProfilePhoto = user.Image.FileName;
-            await _dataRepository.AddAsync(newUser);
-
-            return _mapper.Map<UserInformation, UserAC>(newUser);
         }
 
         /// <summary>
@@ -96,37 +101,20 @@ namespace PromactMessagingApp.Repository.User
         /// </summary>
         /// <param name="userDetail">This details update user details.</param>
         /// <returns>It retuns the result</returns>
-        public async Task<UserDetailAC> UpdateUserDetailAsync(UserDetailAC userDetail)
+        public async Task<UserAC> UpdateUserDetailAsync(UserAC userDetail)
         {
-            var userData = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Id == userDetail.Id);
-            var response = _mapper.Map<UserDetailAC, UserInformation>(userDetail, userData);
-
-            if (userData != null)
+            if (userDetail.Id != null && Guid.TryParse(userDetail.Id, out Guid value))
             {
-                if (userDetail.Image.Length >= 4194304)
-                {
-                    throw new Exception("Image file is more than the 4MB");
-                }
-
-                bool fileExtenstion = UserProfileAsync(userDetail.Image); // file will be checking is extension format.
-
-                if (!fileExtenstion)
-                {
-                    throw new Exception("File extension is not supported.");
-                }
-
-                var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath + "\\ProfileImages\\"); // receving the image path tho save //
-                var filePath = Path.Combine(directoryPath, userDetail.Image.FileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    userDetail.Image.CopyTo(stream);
-                }
-
-                response.ProfilePhoto = userDetail.Image.FileName;
+                var userData = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Id == value);
+                var response = _mapper.Map<UserAC, UserInformation>(userDetail, userData);
+                response.ProfilePhoto = this.CheckImageValidationAsync(userDetail);
                 await _dataRepository.UpdateAsync(response);
+                return _mapper.Map<UserAC>(userData);
             }
-            return _mapper.Map<UserDetailAC>(userData);
+            else
+            {
+                throw new Exception("Please Enter UserId");
+            }
         }
 
         /// <summary>
@@ -134,21 +122,26 @@ namespace PromactMessagingApp.Repository.User
         /// </summary>
         /// <param name="Id">Id is used for particuller user status change.</param>
         /// <returns>return status change.</returns>
-        public async Task RemoveUserByIdAsync(Guid Id)
+        public async Task RemoveUserByIdAsync(string Id)
         {
-            var userDetail = await _dataRepository.FirstOrDefaultAsync<UserInformation>(a => a.Id == Id);
-
-            if (userDetail != null)
+            if (Guid.TryParse(Id, out Guid value))
             {
-                userDetail.Status = false;
+                var userDetail = await _dataRepository.FirstOrDefaultAsync<UserInformation>(a => a.Id == value);
+                if (userDetail != null)
+                {
+                    userDetail.Status = false;
+                }
+                else
+                {
+                    throw new Exception("User Not Exits");
+                }
+                await _dataRepository.UpdateAsync(userDetail);
             }
             else
             {
                 throw new Exception("User Not Exits");
-            }
-            await _dataRepository.UpdateAsync(userDetail);
+            }                  
         }
-
         #endregion
 
 
@@ -167,6 +160,34 @@ namespace PromactMessagingApp.Repository.User
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// This Methods is checking Images details like path and length.
+        /// </summary>
+        /// <param name="user"> It is current used for image details check.</param>
+        /// <returns> return Object .</returns>
+        private string CheckImageValidationAsync(UserAC user)
+        {
+            if (user.Image.Length >= 4194304)
+            {
+                throw new Exception("Image file is more than the 4MB");
+            }
+            else if (!UserProfileAsync(user.Image))
+            {
+                throw new Exception("File extension is not supported.");
+            }
+            else
+            {
+                var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath +
+                  "\\ProfileImages\\"); // receving the image path tho save.
+                var filePath = Path.Combine(directoryPath, user.Image.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    user.Image.CopyTo(stream);
+                }
+                return filePath;
+            }
         }
 
         #endregion

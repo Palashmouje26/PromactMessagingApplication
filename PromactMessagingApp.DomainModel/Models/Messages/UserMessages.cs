@@ -1,15 +1,12 @@
-﻿using PromactMessagingApp.DomainModel.Models.User;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace PromactMessagingApp.DomainModel.Models.Message
 {
     public class UserMessages
     {
         [Key]
+        
         public int Id { get; set; }
 
         public string TextMessage { get; set; }

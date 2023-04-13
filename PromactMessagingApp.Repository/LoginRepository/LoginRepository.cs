@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PromactMessagingApp.DomainModel.ApplicationClasses.ActiveUserAC;
 using PromactMessagingApp.DomainModel.ApplicationClasses.LoginAC;
-using PromactMessagingApp.DomainModel.ApplicationClasses.UserAC;
 using PromactMessagingApp.DomainModel.Models.Login;
 using PromactMessagingApp.DomainModel.Models.User;
 using PromactMessagingApp.Repository.Data;
@@ -37,7 +36,6 @@ namespace PromactMessagingApp.Repository.Login
         /// <param name="emailId">Current User emailID.</param>
         /// <param name="password">Current user Password.</param>
         /// <returns>User Valid or not retrun.</returns>
-
         public async Task<LoginAC> AddloginUserAsync(string emailId, string password)
         {
             UserLoginHistory loginDetail = new UserLoginHistory();

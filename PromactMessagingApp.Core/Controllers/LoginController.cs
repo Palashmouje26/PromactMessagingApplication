@@ -23,19 +23,18 @@ namespace Promact_Messaging_Application
 
         #region Public Methods
         /**
-       * @api {post} /Login/
-       * @apiBody {String} UserId      Mandatory UserId of the .
-       * @apiBody {String} EmailId     Mandatory  input with small letter"pa".
-       * @apiBody {String} Password    Mandatory input 10 digit or number with combination with aplphabets.
-       * @apiBody {bool} IsDeleted     User is Active or Not.
-       * @apiSuccessExample Success-Response:
-       *  { 
-       *      login = "Xyz@ghk.com",
-       *      Password =  "Xyz@123"
-       *  }
-       */
+        * @api {post}/Login/adduser by method to login .
+        * 
+        * @apiBody {object} user email and password.
+        * 
+        * @apiSuccessExample Success-Response:
+        *  { 
+        *      login = "Xyz@ghk.com",
+        *      Password =  "Xyz@123"
+        *  }
+        */
         [HttpPost("userlogin")]
-        public async Task<IActionResult> AddLoginAsync(string emailId, string passcode)
+        public async Task<IActionResult> CreateLoginAsync(string emailId, string passcode)
         {
             var result = await _loginRepository.AddloginUserAsync(emailId, passcode);
 
@@ -46,14 +45,21 @@ namespace Promact_Messaging_Application
             return Ok("Login Successfully");
         }
 
-        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        /**
+        * @api {get} /api/Login/all active user information show.
+        * @apiName GetActuveUserDetailAsync.
+        * @apiGroup login
+        *    
+        *  @apiSuccess : List Of active user details.
+        *  
+        * @apiSuccessExample Success-Response:{object[]} :
+        * 
+        */
         [HttpGet("activeuser")]
-        public async Task<IActionResult> GetUserDetailAsync()
+        public async Task<IActionResult> GetActuveUserDetailAsync()
         {
             return Ok(await _loginRepository.GetActiveUserAsync());
         }
-
-
 
         #endregion
     }

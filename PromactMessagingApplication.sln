@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromactMessagingApp.Web", "Promact Messaging Application\PromactMessagingApp.Web.csproj", "{DB8D4B9B-546F-4215-B1E0-D52784A81443}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromactMessagingApp.Web", "Promact Messaging Application\PromactMessagingApp.Web.csproj", "{DB8D4B9B-546F-4215-B1E0-D52784A81443}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{1C29F89C-AF6B-4293-AC8D-E3E0C2CA183D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromactMessagingApp.Repository", "PromactMessagingApp.Repository\PromactMessagingApp.Repository.csproj", "{98C76D2B-7909-49E8-BB3D-227503B78826}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromactMessagingApp.Repository", "PromactMessagingApp.Repository\PromactMessagingApp.Repository.csproj", "{98C76D2B-7909-49E8-BB3D-227503B78826}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromactMessagingApp.DomainModel", "PromactMessagingApp.DomainModel\PromactMessagingApp.DomainModel.csproj", "{7BC5479D-D6D0-4401-B1CE-AE565913D299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromactMessagingApp.DomainModel", "PromactMessagingApp.DomainModel\PromactMessagingApp.DomainModel.csproj", "{7BC5479D-D6D0-4401-B1CE-AE565913D299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromactMessagingApp.Core", "PromactMessagingApp.Core\PromactMessagingApp.Core.csproj", "{A01B1EF9-36F1-47C4-949F-3F02B2099310}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromactMessagingApp.Core", "PromactMessagingApp.Core\PromactMessagingApp.Core.csproj", "{A01B1EF9-36F1-47C4-949F-3F02B2099310}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromactMessagingApp.Repository.Test", "PromactMessagingApp.Repository.Test\PromactMessagingApp.Repository.Test.csproj", "{3F52ACD1-607B-4F9C-9180-1D15F4F2961A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{A01B1EF9-36F1-47C4-949F-3F02B2099310}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A01B1EF9-36F1-47C4-949F-3F02B2099310}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A01B1EF9-36F1-47C4-949F-3F02B2099310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F52ACD1-607B-4F9C-9180-1D15F4F2961A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F52ACD1-607B-4F9C-9180-1D15F4F2961A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F52ACD1-607B-4F9C-9180-1D15F4F2961A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F52ACD1-607B-4F9C-9180-1D15F4F2961A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{98C76D2B-7909-49E8-BB3D-227503B78826} = {1C29F89C-AF6B-4293-AC8D-E3E0C2CA183D}
 		{7BC5479D-D6D0-4401-B1CE-AE565913D299} = {1C29F89C-AF6B-4293-AC8D-E3E0C2CA183D}
 		{A01B1EF9-36F1-47C4-949F-3F02B2099310} = {1C29F89C-AF6B-4293-AC8D-E3E0C2CA183D}
+		{3F52ACD1-607B-4F9C-9180-1D15F4F2961A} = {1C29F89C-AF6B-4293-AC8D-E3E0C2CA183D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {222BCF48-88F3-492F-A2F5-68A1076D1365}

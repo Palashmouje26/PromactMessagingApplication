@@ -22,7 +22,7 @@ namespace PromactMessagingApp.DomainModel.DbContexts
         {
             modelBuilder.Entity<UserMessages>(a =>
             {
-                a.HasOne<UserInformation>().WithMany().HasForeignKey(a => a.SenderId).IsRequired().OnDelete(DeleteBehavior.NoAction) ;
+                a.HasOne<UserInformation>().WithMany().HasForeignKey(a => a.SenderId).IsRequired().OnDelete(DeleteBehavior.NoAction);
                 a.HasOne<UserInformation>().WithMany().HasForeignKey(a => a.ReceiverId).IsRequired().OnDelete(DeleteBehavior.NoAction);
             });
         }

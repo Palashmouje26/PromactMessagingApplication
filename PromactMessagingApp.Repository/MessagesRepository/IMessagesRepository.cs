@@ -10,11 +10,33 @@ namespace PromactMessagingApp.Repository.Messages
 {
     public interface IMessagesRepository
     {
+        /// <summary>
+        /// This method is used for send messages and save in dbset.
+        /// </summary>
+        /// <param name="messagesAc">Current user message details</param>
+        /// <returns>return object</returns>
         Task<MessagesAC> SendMessageAsync(MessagesAC messagesAc);
-
+        /// <summary>
+        /// This is used for edited the message.
+        /// </summary>
+        /// <param name="messagesAc"> Current user message edit</param>
+        /// <returns></returns>
         Task<MessagesAC> EditMessageAsync(MessagesAC messagesAc);
 
-        Task<MessagesAC> DeleteMessageAsync(Guid UserId, int MessageId);
-        Task<MessagesAC> ReciveMessageAsync(MessagesAC messagesAc);
+        /// <summary>
+        /// This method is for remove the unnecessary message.
+        /// </summary>
+        /// <param name="UserId">current senderId is used</param>
+        /// <param name="MessageId">current messageId is used</param>
+        /// <returns>rturn message true or false</returns>
+        Task<MessagesAC> DeleteMessageAsync(string UserId, int MessageId);
+
+        /// <summary>
+        /// This method is used for send the message to the sender.
+        /// </summary>
+        /// <param name="Id">Current reciverId is used.</param>
+        /// <returns>return object</returns>
+        Task<List<MessagesAC>> ReciveMessageAsync(string Id);
+
     }
 }

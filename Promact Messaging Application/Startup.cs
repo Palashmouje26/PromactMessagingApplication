@@ -12,7 +12,6 @@ using PromactMessagingApp.Repository.Data;
 using PromactMessagingApp.Repository.User;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Newtonsoft.Json.Converters;
-using PromactMessagingApp.DomainModel.ApplicationClasses.UserDetailAC;
 using PromactMessagingApp.Repository.Login;
 using PromactMessagingApp.DomainModel.ApplicationClasses.LoginAC;
 using PromactMessagingApp.DomainModel.Models.Login;
@@ -64,7 +63,6 @@ namespace Promact_Messaging_Application
            {
                cfg.CreateMap<UserAC, UserInformation>().ReverseMap();
                cfg.CreateMap<UserInformation, UserAC>().ReverseMap();
-               cfg.CreateMap<UserDetailAC, UserInformation>().ReverseMap();
                cfg.CreateMap<LoginAC, UserLoginHistory>().ReverseMap();
                cfg.CreateMap<MessagesAC, UserMessages>().ReverseMap();
 

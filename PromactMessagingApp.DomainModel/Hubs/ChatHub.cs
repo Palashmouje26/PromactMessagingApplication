@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.SignalR.Client;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,26 +7,24 @@ namespace PromactMessagingApp.Core.Hubs
 {
     public class ChatHub : Hub
     {
+      
         public static List<string> Id = new List<string>();
 
-        public static class ConnectedUser
-        {
-
-        }
-
-
+        /// <summary>
+        /// this method is used for connecting to the hub.
+        /// </summary>
+        /// <returns>return show disconnection</returns>
         public override Task OnConnectedAsync()
         {
-
             var connectionId = Context.ConnectionId;
             Id.Add(connectionId);
-            //var username = Context.User.Identity.Name;
-            //Id.Add(username,connectionId);
-            Clients.Client(connectionId).SendAsync(connectionId, "ReceiveMessage");
-            Clients.Caller.SendAsync(connectionId, "ReceiveMessage");
             return base.OnConnectedAsync();
         }
 
+        /// <summary>
+        /// This method is for disconnect the user.
+        /// </summary>
+        /// <returns> return show disconnection</returns>
         public override Task OnDisconnectedAsync(Exception exception)
         {
             var connectionId = Context.ConnectionId;
@@ -36,16 +32,17 @@ namespace PromactMessagingApp.Core.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        public async Task RecieveMesssageAsync(string message, string connectionId)
+        /// <summary>
+        /// This method is used for send and recived messages. 
+        /// </summary>
+        /// <param name="connectionId">It is used for user connection-Id.</param>
+        /// <param name="message">It is used for user massage.</param>
+        /// <returns>returns the message.</returns>
+        public async Task SendAsync(string connectionId, string message)
         {
-            await Clients.Client(connectionId).SendAsync("RecieveMesssage", message);
-            await Clients.Caller.SendAsync("RecieveMesssage", message);
+            await Clients.Client(connectionId).SendAsync("Send", message);
+            await Clients.Caller.SendAsync("Send", message);
             return;
         }
-
-
-
-
-
     }
 }

@@ -12,12 +12,12 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.MessagesAC
 
         public string TextMessage { get; set; }
 
-        public Guid SenderId { get; set; }
+        public string SenderId { get; set; }
 
-        public Guid ReceiverId { get; set; }
+        public string ReceiverId { get; set; }
 
         public bool MessageStatus { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public string CreateDate { get; set; }
     }
 }

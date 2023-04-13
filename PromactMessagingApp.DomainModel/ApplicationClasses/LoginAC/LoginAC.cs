@@ -8,7 +8,7 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.LoginAC
     {
         public int LoginId { get; set; }
 
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         public DateTime LoginHistory { get; set; }
 

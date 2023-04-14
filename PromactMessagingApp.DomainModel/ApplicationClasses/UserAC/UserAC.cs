@@ -7,7 +7,7 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.UserAC
 {
     public class UserAC
     {
-        public string? Id { get; set; }
+        public string ? Id { get; set; }
 
         public string FirstName { get; set; }
 
@@ -21,12 +21,12 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.UserAC
 
         public bool Status { get; set; }
 
-        public DateTime? Created { get; set; }
+        public string CreatedAt { get; set; }
 
         [NotMapped]
         public IFormFile Image { get; set; }
-        public string ProfilePhoto;
+      
 
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
     }
 }

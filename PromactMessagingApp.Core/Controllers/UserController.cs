@@ -60,6 +60,8 @@ namespace Promact_Messaging_Application.Controllers
         *   @api{post} api/UserInformation/adduser Method to add user detail.
         *   
         *   @apiBody {object} user detail.
+        *   
+        *   @apiSuccess : Success-Response:{object[]} 
         */
         [HttpPost("createuser")]
         public async Task<IActionResult> CreateUserAsync([FromForm] UserAC user)

@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Promact_Messaging_Application.Controllers;
 using PromactMessagingApp.DomainModel.ApplicationClasses.UserAC;
+using PromactMessagingApp.DomainModel.Enum;
 using PromactMessagingApp.Repository.Data;
 using PromactMessagingApp.Repository.User;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -49,7 +52,23 @@ namespace PromactMessagingApp.Repository.Test.UserRepository
             Assert.Equal(2, organization.Count);
         }
 
-        [Fact]
+        private UserAC GetUserAC()
+        {
+            var user = new UserAC();
+
+            user.Id = "0D03127A-C1A4-4336-8D25-E6AC92F0B246";
+            user.FirstName = "palash";
+            user.LastName = "mouje";
+            user.Email = "rahaul@gmail.com";
+            user.Password = "Rahul@123";
+            user.SubscriptionLevel = SubscriptionLevel.Gold;
+            user.Status = true;
+            user.Created = DateTime.Now;
+            user.ProfilePhoto = "";
+            user.Notes = "dfghjkl";
+
+            return user;
+        }
 
         #endregion
     }

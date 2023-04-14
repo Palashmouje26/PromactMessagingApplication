@@ -56,7 +56,7 @@ namespace Promact_Messaging_Application
         * 
         */
         [HttpGet("activeuser")]
-        public async Task<IActionResult> GetActuveUserDetailAsync()
+        public async Task<IActionResult> GetActiveUserDetailAsync()
         {
             return Ok(await _loginRepository.GetActiveUserAsync());
         }

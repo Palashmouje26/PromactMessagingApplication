@@ -10,7 +10,7 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.LoginAC
 
         public string Id { get; set; }
 
-        public DateTime LoginHistory { get; set; }
+        public string LoginHistory { get; set; }
 
         public bool IsValidate { get; set; }
     }

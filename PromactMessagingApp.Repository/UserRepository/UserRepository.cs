@@ -39,7 +39,6 @@ namespace PromactMessagingApp.Repository.User
         public async Task<List<UserAC>> GetAllUserDetailAsync()
         {
             var userDetail = await _dataRepository.Where<UserInformation>(x => x.Status).AsNoTracking().ToListAsync();
-
             return _mapper.Map<List<UserInformation>, List<UserAC>>(userDetail);
         }
 
@@ -80,7 +79,7 @@ namespace PromactMessagingApp.Repository.User
 
                 UserInformation addUser = new UserInformation()
                 {
-                    Id = newUser.Id,
+                    Id = Guid.NewGuid(),
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
@@ -140,7 +139,7 @@ namespace PromactMessagingApp.Repository.User
             else
             {
                 throw new Exception("User Not Exits");
-            }                  
+            }
         }
         #endregion
 
@@ -189,7 +188,6 @@ namespace PromactMessagingApp.Repository.User
                 return filePath;
             }
         }
-
         #endregion
     }
 }

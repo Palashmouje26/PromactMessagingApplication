@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PromactMessagingApp.Repository.Login;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Promact_Messaging_Application
@@ -33,17 +35,20 @@ namespace Promact_Messaging_Application
         *      Password =  "Xyz@123"
         *  }
         */
-        [HttpPost("userlogin")]
+        [HttpGet("userlogin")]
         public async Task<IActionResult> CreateLoginAsync(string emailId, string passcode)
         {
             var result = await _loginRepository.AddLoginUserAsync(emailId, passcode);
-
-            if (result.IsValidate == false)
+            if (result.IsValidate)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Email And Password Enter Incorrect");
+                return Redirect("https://localhost:44318/api/Login/activeuser");
             }
+            else
+            {
+                return BadRequest();
+            }
+           
 
-            return (IActionResult)await _loginRepository.GetActiveUserAsync();
         }
 
         /**
@@ -56,6 +61,7 @@ namespace Promact_Messaging_Application
         * @apiSuccessExample Success-Response:{object[]} :
         * 
         */
+        
         [HttpGet("activeuser")]
         public async Task<IActionResult> GetActiveUserDetailAsync()
         {

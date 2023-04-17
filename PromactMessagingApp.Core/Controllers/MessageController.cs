@@ -38,7 +38,7 @@ namespace Promact_Messaging_Application
         *   @apiBody {object} user message detail.
         */
         [HttpPost("sendmessage")]
-        public async Task<IActionResult> SendMessageAsync(MessagesAC messagesAC)
+        public async Task<IActionResult> SendMessageAsync([FromRoute] MessagesAC messagesAC)
         {
             var res = await _messagesRepository.SendMessageAsync(messagesAC);
             return Ok("Message Send Successfully");
@@ -51,7 +51,7 @@ namespace Promact_Messaging_Application
        * @apiSuccessExample Success-Response :{object[]} 
        */
         [HttpPut("editmessage")]
-        public async Task<IActionResult> EditMessageAsync(MessagesAC messagesAC)
+        public async Task<IActionResult> EditMessageAsync([FromRoute] MessagesAC messagesAC)
         {
             var response = await _messagesRepository.EditMessageAsync(messagesAC);
             return Ok(response);
@@ -64,7 +64,7 @@ namespace Promact_Messaging_Application
         * @apiSuccessExample Success-Response:
         */
         [HttpPut("deletemessage")]
-        public async Task<IActionResult> DeleteMessageAsync(string UserId, Guid MessageId)
+        public async Task<IActionResult> DeleteMessageAsync([FromRoute] string UserId, Guid MessageId)
         {
             var res = await _messagesRepository.DeleteMessageAsync(UserId, MessageId);
             return Ok(res);
@@ -81,7 +81,7 @@ namespace Promact_Messaging_Application
         * 
         */
         [HttpGet("recivemessage")]
-        public async Task<IActionResult> GetRecivedMessageByIdAsync(string Id)
+        public async Task<IActionResult> GetRecivedMessageByIdAsync([FromRoute] string Id)
         {
             return Ok(await _messagesRepository.ReciveMessageAsync(Id));
         }

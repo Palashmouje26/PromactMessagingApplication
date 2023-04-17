@@ -17,17 +17,15 @@ namespace Promact_Messaging_Application
     public class MessageController : ControllerBase
     {
         #region Private Methods
-        private readonly IMapper _mapper;
-        private readonly IHubContext<ChatHub> _hubContext;
         private readonly IMessagesRepository _messagesRepository;
         #endregion
 
 
         #region Constructor
-        public MessageController(IMapper mapper, IHubContext<ChatHub> hubContext, IMessagesRepository messagesRepository)
+        public MessageController( IMessagesRepository messagesRepository)
         {
-            _mapper = mapper;
-            _hubContext = hubContext;
+
+          
             _messagesRepository = messagesRepository;
         }
         #endregion
@@ -66,7 +64,7 @@ namespace Promact_Messaging_Application
         * @apiSuccessExample Success-Response:
         */
         [HttpPut("deletemessage")]
-        public async Task<IActionResult> DeleteMessageAsync(string UserId, int MessageId)
+        public async Task<IActionResult> DeleteMessageAsync(string UserId, Guid MessageId)
         {
             var res = await _messagesRepository.DeleteMessageAsync(UserId, MessageId);
             return Ok(res);
@@ -77,7 +75,7 @@ namespace Promact_Messaging_Application
         * @apiName GetRecivedMessageByIdAsync.
         * @apiGroup message
         *    
-        *  @apiSuccess :List Of active message details.
+        * @apiSuccess :List Of active message details.
         *  
         * @apiSuccessExample Success-Response:{object[]} :
         * 

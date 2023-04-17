@@ -7,7 +7,7 @@ namespace PromactMessagingApp.DomainModel.Models.Message
     {
         [Key]
         
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string TextMessage { get; set; }
 

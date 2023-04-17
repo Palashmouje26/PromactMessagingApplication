@@ -14,7 +14,6 @@ namespace Promact_Messaging_Application.Controllers
 
         #region private Member
         private readonly IUserRepository _userRepository;
-
         #endregion
 
         #region Constructor
@@ -51,7 +50,7 @@ namespace Promact_Messaging_Application.Controllers
        * @apiSuccess : Show particuler user details.
        */
         [HttpGet("userbyId/{Id}")]
-        public async Task<IActionResult> GetUserByIDAsync([FromRoute] string Id)
+        public async Task<IActionResult> GetUserByIdAsync([FromRoute] string Id)
         {
             return Ok(await _userRepository.GetUserByIdAsync(Id));
         }
@@ -102,10 +101,10 @@ namespace Promact_Messaging_Application.Controllers
 
         * @apiSuccessExample Success-Response:{object[]} 
         */
-        [HttpPut("removebyId/{Id}")]
-        public async Task<ActionResult> RemoveUserByIdAsync([FromRoute] string Id)
+        [HttpPut("userbyId/{Id}")]
+        public async Task<ActionResult> UpdateUserByIdAsync([FromRoute] string Id)
         {
-            await _userRepository.RemoveUserByIdAsync(Id);
+            await _userRepository.UpdateUserByIdAsync(Id);
             return Ok("Remove Successfully");
         }
         #endregion

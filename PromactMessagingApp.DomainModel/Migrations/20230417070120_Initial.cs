@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PromactMessagingApp.DomainModel.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace PromactMessagingApp.DomainModel.Migrations
                     Password = table.Column<string>(maxLength: 20, nullable: false),
                     SubscriptionLevel = table.Column<int>(nullable: false),
                     Status = table.Column<bool>(nullable: false),
-                    Created = table.Column<DateTime>(type: "date", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "date", nullable: false),
                     ProfilePhoto = table.Column<string>(nullable: true),
                     Notes = table.Column<string>(maxLength: 500, nullable: true)
                 },
@@ -31,18 +31,17 @@ namespace PromactMessagingApp.DomainModel.Migrations
                 name: "Login",
                 columns: table => new
                 {
-                    LoginId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     Id = table.Column<Guid>(nullable: false),
-                    LoginHistory = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    LoginDate = table.Column<DateTime>(nullable: false),
                     IsValidate = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Login", x => x.LoginId);
+                    table.PrimaryKey("PK_Login", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Login_User_Id",
-                        column: x => x.Id,
+                        name: "FK_Login_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -52,8 +51,7 @@ namespace PromactMessagingApp.DomainModel.Migrations
                 name: "Message",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
                     TextMessage = table.Column<string>(nullable: true),
                     SenderId = table.Column<Guid>(nullable: false),
                     ReceiverId = table.Column<Guid>(nullable: false),
@@ -76,9 +74,9 @@ namespace PromactMessagingApp.DomainModel.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Login_Id",
+                name: "IX_Login_UserId",
                 table: "Login",
-                column: "Id");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Message_ReceiverId",

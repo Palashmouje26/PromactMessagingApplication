@@ -36,13 +36,14 @@ namespace Promact_Messaging_Application
         [HttpPost("userlogin")]
         public async Task<IActionResult> CreateLoginAsync(string emailId, string passcode)
         {
-            var result = await _loginRepository.AddloginUserAsync(emailId, passcode);
+            var result = await _loginRepository.AddLoginUserAsync(emailId, passcode);
 
             if (result.IsValidate == false)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Email And Password Enter Incorrect");
             }
-            return Ok("Login Successfully");
+
+            return (IActionResult)await _loginRepository.GetActiveUserAsync();
         }
 
         /**

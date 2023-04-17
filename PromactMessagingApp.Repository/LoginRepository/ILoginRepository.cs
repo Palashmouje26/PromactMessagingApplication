@@ -16,7 +16,7 @@ namespace PromactMessagingApp.Repository.Login
         /// <param name="emailId">emailid is used for checking particular user email.</param>
         /// <param name="password"> passcode is used for checking particular user password</param>
         /// <returns> return user login </returns>
-        Task<LoginAC> AddloginUserAsync(string emailId, string password);
+        Task<LoginAC> AddLoginUserAsync (string emailId, string password);
 
         /// <summary>
         /// List Of Active User.

@@ -38,13 +38,13 @@ namespace PromactMessagingApp.Repository.Messages
         /// <returns>returns object </returns>
         public async Task<MessagesAC> SendMessageAsync(MessagesAC messagesAc)
         {
-            if (messagesAc == null && (Guid.TryParse(messagesAc.SenderId, out Guid value)))
+            if (messagesAc != null && (Guid.TryParse(messagesAc.SenderId, out Guid value)))
             {
                 var userInfo = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Id == value);
 
                 if (userInfo != null)
                 {
-                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", messagesAc.ReceiverId, messagesAc.TextMessage);
+                    await _hubContext.Clients.All.SendAsync("SendMessage", messagesAc.ReceiverId, messagesAc.TextMessage);
                     var response = _mapper.Map<MessagesAC, UserMessages>(messagesAc);
 
                     await _dataRepository.AddAsync(response);
@@ -81,7 +81,7 @@ namespace PromactMessagingApp.Repository.Messages
         /// <returns>return object</returns>
         public async Task<MessagesAC> EditMessageAsync(MessagesAC messagesAc)
         {
-            if (messagesAc.Id != 0 && Guid.TryParse(messagesAc.SenderId, out Guid senderValue )&& Guid.TryParse(messagesAc.ReceiverId, out Guid receiverValue))
+            if (messagesAc.Id != null && Guid.TryParse(messagesAc.SenderId, out Guid senderValue ) && Guid.TryParse(messagesAc.ReceiverId, out Guid receiverValue))
             {
                 var userInfo = await _dataRepository.FirstOrDefaultAsync<UserMessages>(x => x.Id == messagesAc.Id && x.SenderId == senderValue
                 && x.ReceiverId == receiverValue);
@@ -107,11 +107,11 @@ namespace PromactMessagingApp.Repository.Messages
         /// <param name="UserId">Current users , userId is used for edit.</param>
         /// <param name="MessageId">Current users , messageId is used for edit.</param>
         /// <returns>return object it is true or false.</returns>
-        public async Task<MessagesAC> DeleteMessageAsync(string UserId, int MessageId)
+        public async Task<MessagesAC> DeleteMessageAsync(string UserId, Guid MessageId)
         {
             if (Guid.TryParse(UserId, out Guid value))
             {
-                if (UserId == null || MessageId == 0)
+                if (UserId == null || MessageId == null)
                 {
                     var userInfo = await _dataRepository.FirstOrDefaultAsync<UserMessages>(x => x.SenderId == value && x.Id == MessageId);
                     if (userInfo != null)

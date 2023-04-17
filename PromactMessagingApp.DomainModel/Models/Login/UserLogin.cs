@@ -5,17 +5,17 @@ using PromactMessagingApp.DomainModel.Models.User;
 
 namespace PromactMessagingApp.DomainModel.Models.Login
 {
-    public class UserLoginHistory 
+    public class UserLogin 
     {
         [Key]
-        public int LoginId { get; set; }
-
         public Guid Id { get; set; }
 
-        [ForeignKey("Id")]
+        public Guid UserId { get; set; }
+
+        [ForeignKey("UserId")]
         public virtual UserInformation UserInformation { get; set; }
 
-        public DateTime LoginHistory { get; set; }
+        public DateTime LoginDate { get; set; }
 
         public bool IsValidate { get; set; }
     }

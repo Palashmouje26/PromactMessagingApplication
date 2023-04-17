@@ -14,7 +14,7 @@ namespace PromactMessagingApp.DomainModel.DbContexts
 
         public DbSet<UserInformation> User { get; set; }
 
-        public DbSet<UserLoginHistory> Login { get; set; }
+        public DbSet<UserLogin> Login { get; set; }
 
         public DbSet<UserMessages> Message { get; set; }
 

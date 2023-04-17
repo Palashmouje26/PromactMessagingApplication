@@ -8,7 +8,7 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.MessagesAC
 {
     public class MessagesAC
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string TextMessage { get; set; }
 
@@ -18,6 +18,6 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.MessagesAC
 
         public bool MessageStatus { get; set; }
 
-        public string CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

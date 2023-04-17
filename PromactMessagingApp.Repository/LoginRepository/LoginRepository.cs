@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PromactMessagingApp.DomainModel.ApplicationClasses.ActiveUserAC;
 using PromactMessagingApp.DomainModel.ApplicationClasses.LoginAC;
+using PromactMessagingApp.DomainModel.ApplicationClasses.UserAC;
 using PromactMessagingApp.DomainModel.Models.Login;
 using PromactMessagingApp.DomainModel.Models.User;
 using PromactMessagingApp.Repository.Data;
@@ -36,27 +37,26 @@ namespace PromactMessagingApp.Repository.Login
         /// <param name="emailId">Current User emailID.</param>
         /// <param name="password">Current user Password.</param>
         /// <returns>User Valid or not retrun.</returns>
-        public async Task<LoginAC> AddloginUserAsync(string emailId, string password)
+        public async Task<LoginAC> AddLoginUserAsync (string emailId, string password)
         {
-            UserLoginHistory loginDetail = new UserLoginHistory();
-            loginDetail.LoginHistory = DateTime.Now;
+            UserLogin loginDetail = new UserLogin();
+            loginDetail.LoginDate = DateTime.Now;
 
             var userDetail = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Email.Equals(emailId) && x.Password.Equals(password));
 
             if (userDetail != null)
             {
-                loginDetail.Id = userDetail.Id;
+                loginDetail.UserId = userDetail.Id;
                 loginDetail.IsValidate = true;
             }
             else
             {
                 var response = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Email == emailId);
-                loginDetail.Id = response.Id;
+                loginDetail.UserId = response.Id;
                 loginDetail.IsValidate = false;
             }
             await _dataRepository.AddAsync(loginDetail);
             return _mapper.Map<LoginAC>(loginDetail);
-
         }
         /// <summary>
         /// Showing active user in list.

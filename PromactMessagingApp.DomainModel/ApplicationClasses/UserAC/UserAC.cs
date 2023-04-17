@@ -21,11 +21,10 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.UserAC
 
         public bool Status { get; set; }
 
-        public string CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         [NotMapped]
         public IFormFile Image { get; set; }
-      
 
         public string? Notes { get; set; }
     }

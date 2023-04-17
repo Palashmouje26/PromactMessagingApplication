@@ -6,11 +6,11 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.LoginAC
 {
     public class LoginAC
     {
-        public int LoginId { get; set; }
+        public int Id { get; set; }
 
-        public string Id { get; set; }
+        public string UserId { get; set; }
 
-        public string LoginHistory { get; set; }
+        public string LoginDate  { get; set; }
 
         public bool IsValidate { get; set; }
     }

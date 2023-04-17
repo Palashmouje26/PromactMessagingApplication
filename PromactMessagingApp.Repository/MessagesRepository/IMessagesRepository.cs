@@ -29,7 +29,7 @@ namespace PromactMessagingApp.Repository.Messages
         /// <param name="UserId">current senderId is used</param>
         /// <param name="MessageId">current messageId is used</param>
         /// <returns>rturn message true or false</returns>
-        Task<MessagesAC> DeleteMessageAsync(string UserId, int MessageId);
+        Task<MessagesAC> DeleteMessageAsync(string UserId, Guid MessageId);
 
         /// <summary>
         /// This method is used for send the message to the sender.

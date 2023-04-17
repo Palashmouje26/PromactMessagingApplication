@@ -63,7 +63,7 @@ namespace Promact_Messaging_Application
            {
                cfg.CreateMap<UserAC, UserInformation>().ReverseMap();
                cfg.CreateMap<UserInformation, UserAC>().ReverseMap();
-               cfg.CreateMap<LoginAC, UserLoginHistory>().ReverseMap();
+               cfg.CreateMap<LoginAC, UserLogin>().ReverseMap();
                cfg.CreateMap<MessagesAC, UserMessages>().ReverseMap();
 
            });

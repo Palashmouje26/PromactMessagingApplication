@@ -39,7 +39,7 @@ namespace PromactMessagingApp.DomainModel.Models.User
 
 
         [Column(TypeName = "date")]
-        public DateTime Created { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public string ProfilePhoto { get; set; }
 

@@ -10,8 +10,8 @@ using PromactMessagingApp.DomainModel.DbContexts;
 namespace PromactMessagingApp.DomainModel.Migrations
 {
     [DbContext(typeof(MessagingDbContext))]
-    [Migration("20230410061126_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230417070120_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,35 +21,33 @@ namespace PromactMessagingApp.DomainModel.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("PromactMessagingApp.DomainModel.Models.Login.UserLoginHistory", b =>
+            modelBuilder.Entity("PromactMessagingApp.DomainModel.Models.Login.UserLogin", b =>
                 {
-                    b.Property<int>("LoginId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsValidate")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LoginHistory")
+                    b.Property<DateTime>("LoginDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("LoginId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("Id");
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Login");
                 });
 
             modelBuilder.Entity("PromactMessagingApp.DomainModel.Models.Message.UserMessages", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -81,7 +79,7 @@ namespace PromactMessagingApp.DomainModel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("date");
 
                     b.Property<string>("Email")
@@ -122,11 +120,11 @@ namespace PromactMessagingApp.DomainModel.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("PromactMessagingApp.DomainModel.Models.Login.UserLoginHistory", b =>
+            modelBuilder.Entity("PromactMessagingApp.DomainModel.Models.Login.UserLogin", b =>
                 {
                     b.HasOne("PromactMessagingApp.DomainModel.Models.User.UserInformation", "UserInformation")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

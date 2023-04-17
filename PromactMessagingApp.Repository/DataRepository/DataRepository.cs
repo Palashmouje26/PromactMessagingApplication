@@ -36,11 +36,23 @@ namespace PromactMessagingApp.Repository.Data
             await dbSet.AddAsync(entity);
             await _messagingDbContext.SaveChangesAsync();
         }
-
+        /// <summary>
+        /// Adds entities to the DbSet.
+        /// </summary>
+        /// <typeparam name="T">Model class to create DbSet.</typeparam>
+        /// <param name="entities">Entities to add.</param>
+        /// <returns>Nothing</returns>
         public Task AddRangeAsync<T>(IEnumerable<T> entities) where T : class
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// Determines whether any data matches the condition.
+        /// </summary>
+        /// <typeparam name="T">Model class to create DbSet.</typeparam>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <returns>Nothing</returns>
+        /// <exception cref="NotImplementedException"></exception>
         public Task<bool> AnyAsync<T>(Expression<Func<T, bool>> predicate) where T : class
         {
             throw new NotImplementedException();
@@ -104,6 +116,10 @@ namespace PromactMessagingApp.Repository.Data
             return values;
         }
 
+        /// <summary>
+        /// Method to get a database transaction.
+        /// </summary>
+        /// <returns>Database context transaction</returns>
         public IDbContextTransaction GetTransaction()
         {
             throw new NotImplementedException();
@@ -121,32 +137,56 @@ namespace PromactMessagingApp.Repository.Data
             dbSet.Remove(entity);
             await _messagingDbContext.SaveChangesAsync();
         }
-
+        /// <summary>
+        /// Remove entities from the DbSet.
+        /// </summary>
+        /// <typeparam name="T">Model class to create DbSet.</typeparam>
+        /// <param name="entities">Entities to remove.</param>
+        /// <returns>Task</returns>
+        /// <exception cref="NotImplementedException"></exception>
         public Task RemoveRangeAsync<T>(IEnumerable<T> entities) where T : class
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Saves all tracking entity.
+        /// </summary>
+        /// <returns>Nothing</returns>
         public Task SaveChangesAsync()
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Selects data based on predicate.
+        /// </summary>
+        /// <typeparam name="T">Model class to create DbSet.</typeparam>
+        /// <typeparam name="Tresult">The type of entity, returned by the method.</typeparam>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <returns>Noyhing</returns>
         public IQueryable<Tresult> Select<T, Tresult>(Expression<Func<T, Tresult>> predicate) where T : class
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Method to begin database transaction.
+        /// </summary>
+        /// <returns>Nothing</returns>
         public void TransactionBegin()
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Method to commit database transaction.
+        /// </summary>
+        /// <returns>Nothing</returns>
         public void TransactionCommit()
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Method to Rolllback database transaction.
+        /// </summary>
+        /// <returns>Nothing</returns>
         public void TransactionRollback()
         {
             throw new NotImplementedException();
@@ -163,7 +203,13 @@ namespace PromactMessagingApp.Repository.Data
             dbSet.Update(entity);
             await _messagingDbContext.SaveChangesAsync();
         }
-
+        /// <summary>
+        /// Updates entities to the DbSet.
+        /// </summary>
+        /// <typeparam name="T">Model class to create DbSet.</typeparam>
+        /// <param name="entities">Entities to update.</param>
+        /// <returns>Nothing</returns>
+        /// <exception cref="NotImplementedException"></exception>
         public Task UpdateRangeAsync<T>(IEnumerable<T> entities) where T : class
         {
             throw new NotImplementedException();

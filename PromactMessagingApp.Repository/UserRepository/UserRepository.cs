@@ -75,7 +75,7 @@ namespace PromactMessagingApp.Repository.User
             }
             else
             {
-                var image = this.CheckImageValidationAsync(user);
+                var image = CheckImageValidationAsync(user);
 
                 UserInformation addUser = new UserInformation()
                 {
@@ -86,7 +86,7 @@ namespace PromactMessagingApp.Repository.User
                     Password = user.Password,
                     SubscriptionLevel = user.SubscriptionLevel,
                     Status = user.Status,
-                    Created = DateTime.Now,
+                    CreatedAt = DateTime.Now,
                     ProfilePhoto = user.Image.FileName,
                     Notes = user.Notes
                 };
@@ -121,7 +121,7 @@ namespace PromactMessagingApp.Repository.User
         /// </summary>
         /// <param name="Id">Id is used for particuller user status change.</param>
         /// <returns>return status change.</returns>
-        public async Task RemoveUserByIdAsync(string Id)
+        public async Task UpdateUserByIdAsync(string Id)
         {
             if (Guid.TryParse(Id, out Guid value))
             {
@@ -132,13 +132,13 @@ namespace PromactMessagingApp.Repository.User
                 }
                 else
                 {
-                    throw new Exception("User Not Exits");
+                    throw new Exception("User Not Exists");
                 }
                 await _dataRepository.UpdateAsync(userDetail);
             }
             else
             {
-                throw new Exception("User Not Exits");
+                throw new Exception("User Not Exists");
             }
         }
         #endregion

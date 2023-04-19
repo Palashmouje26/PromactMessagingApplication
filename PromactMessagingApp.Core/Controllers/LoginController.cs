@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using PromactMessagingApp.Repository.Login;
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Promact_Messaging_Application
@@ -24,21 +20,21 @@ namespace Promact_Messaging_Application
         #endregion
 
         #region Public Methods
+
         /**
-        * @api {post}/Login/adduser by method to login .
+        * @api {post}/login/:emailId And password Is used for login the user.
+        * 
+        * @apiParam {Number} emailId is unique emailId of user.
+        * @apiParam {String} password is unique password of user.
         * 
         * @apiBody {object} user email and password.
         * 
-        * @apiSuccessExample Success-Response:
-        *  { 
-        *      login = "Xyz@ghk.com",
-        *      Password =  "Xyz@123"
-        *  }
+        * @apiSuccessExample Success-Response: showing list of active user.
         */
         [HttpGet("userlogin")]
-        public async Task<IActionResult> CreateLoginAsync(string emailId, string passcode)
+        public async Task<IActionResult> CreateLoginAsync(string emailId, string password)
         {
-            var result = await _loginRepository.AddLoginUserAsync(emailId, passcode);
+            var result = await _loginRepository.AddLoginUserAsync(emailId, password);
             if (result.IsValidate)
             {
                 return Redirect("https://localhost:44318/api/Login/activeuser");
@@ -47,21 +43,19 @@ namespace Promact_Messaging_Application
             {
                 return BadRequest();
             }
-           
-
         }
 
         /**
-        * @api {get} /api/Login/all active user information show.
+        * @api {get} /login/ list of all active user information show.
         * @apiName GetActuveUserDetailAsync.
         * @apiGroup login
         *    
-        *  @apiSuccess : List Of active user details.
+        * @apiSuccess :  Showing List Of active user details.
         *  
         * @apiSuccessExample Success-Response:{object[]} :
         * 
         */
-        
+
         [HttpGet("activeuser")]
         public async Task<IActionResult> GetActiveUserDetailAsync()
         {

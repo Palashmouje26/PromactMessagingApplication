@@ -76,22 +76,11 @@ namespace PromactMessagingApp.Repository.User
             else
             {
                 var image = CheckImageValidationAsync(user);
-
-                UserInformation addUser = new UserInformation()
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Password = user.Password,
-                    SubscriptionLevel = user.SubscriptionLevel,
-                    Status = user.Status,
-                    CreatedAt = DateTime.Now,
-                    ProfilePhoto = user.Image.FileName,
-                    Notes = user.Notes
-                };
-                await _dataRepository.AddAsync(addUser);
-                return _mapper.Map<UserAC>(addUser);
+                var userDetail = _mapper.Map<UserAC, UserInformation>(user, response);
+                var profilePhoto = user.Image.FileName;
+                userDetail.ProfilePhoto = profilePhoto;
+                await _dataRepository.AddAsync(userDetail);
+                return _mapper.Map<UserAC>(userDetail);
             }
         }
 
@@ -106,7 +95,7 @@ namespace PromactMessagingApp.Repository.User
             {
                 var userData = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Id == value);
                 var response = _mapper.Map<UserAC, UserInformation>(userDetail, userData);
-                response.ProfilePhoto = this.CheckImageValidationAsync(userDetail);
+                response.ProfilePhoto = CheckImageValidationAsync(userDetail);
                 await _dataRepository.UpdateAsync(response);
                 return _mapper.Map<UserAC>(userData);
             }
@@ -121,7 +110,7 @@ namespace PromactMessagingApp.Repository.User
         /// </summary>
         /// <param name="Id">Id is used for particuller user status change.</param>
         /// <returns>return status change.</returns>
-        public async Task UpdateUserByIdAsync(string Id)
+        public async Task UpdateUserStatusByIdAsync(string Id)
         {
             if (Guid.TryParse(Id, out Guid value))
             {
@@ -179,7 +168,7 @@ namespace PromactMessagingApp.Repository.User
             else
             {
                 var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath +
-                  "\\ProfileImages\\"); // receving the image path tho save.
+                  "\\ProfileImages\\");
                 var filePath = Path.Combine(directoryPath, user.Image.FileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {

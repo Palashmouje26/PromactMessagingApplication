@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿    using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using PromactMessagingApp.Core.Hubs;
@@ -9,6 +9,7 @@ using PromactMessagingApp.Repository.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 
 namespace PromactMessagingApp.Repository.Messages
 {
@@ -32,7 +33,7 @@ namespace PromactMessagingApp.Repository.Messages
         #region Public Methods
 
         /// <summary>
-        /// This method is used for sending the message user and store in dbset.
+        /// This method is used for sending the messages from one user to another and store in dbset.
         /// </summary>
         /// <param name="messagesAc">Current user is used for sending messages.</param>
         /// <returns>returns object </returns>
@@ -40,13 +41,14 @@ namespace PromactMessagingApp.Repository.Messages
         {
             if (messagesAc != null && (Guid.TryParse(messagesAc.SenderId, out Guid value)))
             {
-                var userInfo = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Id == value);
+                UserInformation userInfo = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Id == value);
 
                 if (userInfo != null)
                 {
-                    await _hubContext.Clients.All.SendAsync("SendMessage", messagesAc.ReceiverId, messagesAc.TextMessage);
-                    var response = _mapper.Map<MessagesAC, UserMessages>(messagesAc);
+                    await _hubContext.Clients.Client(messagesAc.SenderId).SendAsync("SendMessage", messagesAc.ReceiverId, messagesAc.TextMessage);                  
 
+                    UserMessages response = _mapper.Map<MessagesAC, UserMessages>(messagesAc);
+                   
                     await _dataRepository.AddAsync(response);
                 }
                 return _mapper.Map<MessagesAC>(messagesAc);
@@ -55,21 +57,22 @@ namespace PromactMessagingApp.Repository.Messages
         }
 
         /// <summary>
-        /// This method is used for showing reciver user messages.
+        /// This method is used for showing receiver user messages.
         /// </summary>
-        /// <param name="Id">Id is used for particular user reciver.</param>
+        /// <param name="Id">Id is used for particular user receiver.</param>
         /// <returns> return object </returns>
-        public async Task<List<MessagesAC>> ReciveMessageAsync(string Id)
+        public async Task<List<MessagesAC>> ReceiveMessageAsync(string Id)
         {
             if (Guid.TryParse(Id, out Guid value))
             {
-                var userInfo = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Id == value);
+                UserInformation userInfo = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Id == value);
 
                 if (userInfo != null)
                 {
                     List<UserMessages> messageList = await _dataRepository.Where<UserMessages>(x => x.ReceiverId == value).ToListAsync();
                     return _mapper.Map<List<MessagesAC>>(messageList);
                 }
+
             }
             return null;
         }
@@ -79,11 +82,11 @@ namespace PromactMessagingApp.Repository.Messages
         /// </summary>
         /// <param name="messagesAc">Currenmt user messages.</param>
         /// <returns>return object</returns>
-        public async Task<MessagesAC> EditMessageAsync(MessagesAC messagesAc)
+        public async Task<MessagesAC> EditMessageAsync(Guid Id,MessagesAC messagesAc)
         {
-            if (messagesAc.Id != null && Guid.TryParse(messagesAc.SenderId, out Guid senderValue ) && Guid.TryParse(messagesAc.ReceiverId, out Guid receiverValue))
+            if (Id != null && Guid.TryParse(messagesAc.SenderId, out Guid senderValue) && Guid.TryParse(messagesAc.ReceiverId, out Guid receiverValue))
             {
-                var userInfo = await _dataRepository.FirstOrDefaultAsync<UserMessages>(x => x.Id == messagesAc.Id && x.SenderId == senderValue
+                UserMessages userInfo = await _dataRepository.FirstOrDefaultAsync<UserMessages>(x => x.Id.Equals(messagesAc.SenderId) && x.SenderId == senderValue
                 && x.ReceiverId == receiverValue);
 
                 if (userInfo != null)
@@ -98,7 +101,7 @@ namespace PromactMessagingApp.Repository.Messages
                 }
             }
             return messagesAc;
-            
+
         }
 
         /// <summary>
@@ -113,7 +116,7 @@ namespace PromactMessagingApp.Repository.Messages
             {
                 if (UserId == null || MessageId == null)
                 {
-                    var userInfo = await _dataRepository.FirstOrDefaultAsync<UserMessages>(x => x.SenderId == value && x.Id == MessageId);
+                    UserMessages userInfo = await _dataRepository.FirstOrDefaultAsync<UserMessages>(x => x.SenderId == value && x.Id == MessageId);
                     if (userInfo != null)
                     {
                         userInfo.MessageStatus = false;
@@ -125,7 +128,7 @@ namespace PromactMessagingApp.Repository.Messages
                         throw new Exception("Message Not Deleted");
                     }
                 }
-            } 
+            }
             return new MessagesAC();
 
         }

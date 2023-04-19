@@ -49,7 +49,7 @@ namespace PromactMessagingApp.Repository.Data
         /// <summary>
         /// Determines whether any data matches the condition.
         /// </summary>
-        /// <typeparam name="T">Model class to create DbSet.</typeparam>
+        /// <typeparam name="T">Model class to create DbSet.+</typeparam>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>Nothing</returns>
         /// <exception cref="NotImplementedException"></exception>

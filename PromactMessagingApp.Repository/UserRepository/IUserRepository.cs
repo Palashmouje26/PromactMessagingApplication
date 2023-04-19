@@ -39,7 +39,7 @@ namespace PromactMessagingApp.Repository.User
         /// </summary>
         /// <param name="Id">Id is used for particular user.</param>
         /// <returns>return object</returns>
-        Task UpdateUserByIdAsync (string Id);
+        Task UpdateUserStatusByIdAsync(string Id);
 
     }
 }

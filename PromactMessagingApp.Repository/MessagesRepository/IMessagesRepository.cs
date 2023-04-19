@@ -21,7 +21,7 @@ namespace PromactMessagingApp.Repository.Messages
         /// </summary>
         /// <param name="messagesAc"> Current user message edit</param>
         /// <returns></returns>
-        Task<MessagesAC> EditMessageAsync(MessagesAC messagesAc);
+        Task<MessagesAC> EditMessageAsync(Guid Id,MessagesAC messagesAc);
 
         /// <summary>
         /// This method is for remove the unnecessary message.
@@ -36,7 +36,7 @@ namespace PromactMessagingApp.Repository.Messages
         /// </summary>
         /// <param name="Id">Current reciverId is used.</param>
         /// <returns>return object</returns>
-        Task<List<MessagesAC>> ReciveMessageAsync(string Id);
+        Task<List<MessagesAC>> ReceiveMessageAsync(string Id);
 
     }
 }

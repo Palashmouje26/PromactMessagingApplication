@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PromactMessagingApp.DomainModel.ApplicationClasses.ActiveUserAC;
 using PromactMessagingApp.DomainModel.ApplicationClasses.LoginAC;
-using PromactMessagingApp.DomainModel.ApplicationClasses.UserAC;
 using PromactMessagingApp.DomainModel.Models.Login;
 using PromactMessagingApp.DomainModel.Models.User;
 using PromactMessagingApp.Repository.Data;
@@ -42,7 +41,7 @@ namespace PromactMessagingApp.Repository.Login
             UserLogin loginDetail = new UserLogin();
             loginDetail.LoginDate = DateTime.Now;
 
-            var userDetail = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Email.Equals(emailId) && x.Password.Equals(password));
+            var userDetail = await _dataRepository.FirstOrDefaultAsync<UserInformation>(x => x.Email.Equals(emailId, StringComparison.OrdinalIgnoreCase) && x.Password.Equals(password, StringComparison.OrdinalIgnoreCase));
 
             if (userDetail != null)
             {

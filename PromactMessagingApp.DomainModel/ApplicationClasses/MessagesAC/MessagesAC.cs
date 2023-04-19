@@ -8,7 +8,6 @@ namespace PromactMessagingApp.DomainModel.ApplicationClasses.MessagesAC
 {
     public class MessagesAC
     {
-        public Guid Id { get; set; }
 
         public string TextMessage { get; set; }
 

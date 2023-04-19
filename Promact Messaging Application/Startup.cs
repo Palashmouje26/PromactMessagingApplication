@@ -37,7 +37,7 @@ namespace Promact_Messaging_Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR();
+
             services.AddControllers().AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.Converters.Add(new StringEnumConverter());
@@ -57,8 +57,8 @@ namespace Promact_Messaging_Application
                     Version = "v1"
                 });
             });
-             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-             .AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie();
             services.AddAutoMapper(cfg =>
            {
                cfg.CreateMap<UserAC, UserInformation>().ReverseMap();
@@ -67,7 +67,7 @@ namespace Promact_Messaging_Application
                cfg.CreateMap<MessagesAC, UserMessages>().ReverseMap();
 
            });
-
+            services.AddSignalR();
         }
 
 

@@ -16,7 +16,7 @@ namespace PromactMessagingApp.Repository.Test.UserRepository
     {
         #region Private Variables
         #region Dependencies
-        private readonly Mock<IUserRepository> _userRepository;
+        private readonly Mock<IUserRepository> _userRepository = new Mock<IUserRepository>();
         private readonly UserController _userController;
         private readonly Mock<IDataRepository> _dataRepository;
         #endregion

@@ -26,13 +26,13 @@ namespace Promact_Messaging_Application.Controllers
         #region public Methods
 
        /**
-       * @api {get} /api/UserInformation/all user information.
+       * @api {get} /userInformation/:all user information.
        * @apiName GetUserDetailAsync
        * @apiGroup User
        *    
-       *  @apiSuccess : List Of  user details.
+       * @apiSuccess :Showing list Of user details.
        *  
-       * @apiSuccessExample Success-Response:{object[]}  :
+       * @apiSuccessExample Success-Response:{object[]}
        * 
        */
         [HttpGet("userdetail")]
@@ -40,14 +40,15 @@ namespace Promact_Messaging_Application.Controllers
         {
             return Ok(await _userRepository.GetAllUserDetailAsync());
         }
+
        /**
-       * @api {get} /api/UserInformation /:id get one particuler user information.
+       * @api {get}/userInformation/:id get one particuler user information.
        * @apiName GetUserByIDAsync.
        * @apiGroup User
        *    
        * @apiParam {Number}  Id of the user.
        * 
-       * @apiSuccess : Show particuler user details.
+       * @apiSuccess :show particuler user details.
        */
         [HttpGet("userbyId/{Id}")]
         public async Task<IActionResult> GetUserByIdAsync([FromRoute] string Id)
@@ -56,8 +57,9 @@ namespace Promact_Messaging_Application.Controllers
         }
 
         /**
-        *   @api{post} api/UserInformation/adduser Method to add user detail.
+        *   @api {post}/ userInformation/:adduser Method to add user detail.
         *   
+        *   @apiParam {String} UserAC Object.
         *   @apiBody {object} user detail.
         *   
         *   @apiSuccess : Success-Response:{object[]} 
@@ -75,13 +77,13 @@ namespace Promact_Messaging_Application.Controllers
         }
 
         /**
-         * @api {put} /UserInformation/ Modify user information.
+         * @api {put} /userInformation/:updating user information.
          * @apiName UpdateUserAsync.
          * @apiGroup User
          *
-         * @apiParam :{object[]} 
+         * @apiParam {String} UserAC Object.
          * 
-         * @apiUse User ID Not Found Error.
+         * @apiErrorExample Error-Response: BadRequest.
          */
         [HttpPut("updateuserdetail")]
         public async Task<ActionResult> UpdateUserAsync([FromForm] UserAC userDetail)
@@ -91,21 +93,24 @@ namespace Promact_Messaging_Application.Controllers
                 return BadRequest();
             }
             await _userRepository.UpdateUserDetailAsync(userDetail);
-            return Ok("Update Successfully");
+            return Ok("Update Information Successfully");
         }
 
         /**
-        * @api {put} /UserInformation/ Modify User Active or Inactive.
-        * @apiName RemoveByAsync
+        * @api {put} / userInformation/:updating user status.
+        * 
+        * @apiName UpdateUserByIdAsync
         * @apiGroup User
-
+        * 
+        * @apiParam :Id of the user is used.
+        * 
         * @apiSuccessExample Success-Response:{object[]} 
         */
-        [HttpPut("userbyId/{Id}")]
-        public async Task<ActionResult> UpdateUserByIdAsync([FromRoute] string Id)
+        [HttpPut("updateuserstatusbyId/{Id}")]
+        public async Task<ActionResult> UpdateUserStatusByIdAsync([FromRoute] string Id)
         {
-            await _userRepository.UpdateUserByIdAsync(Id);
-            return Ok("Remove Successfully");
+            await _userRepository.UpdateUserStatusByIdAsync(Id);
+            return Ok("Update status Successfully");
         }
         #endregion
     }
